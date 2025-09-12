@@ -11,3 +11,12 @@
 .card {
     margin-bottom:20px;
 }
+
+label {
+    color: #333;
+}
+
+label:after {
+    content: " *";
+    color: red;
+}

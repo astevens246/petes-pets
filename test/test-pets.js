@@ -35,6 +35,23 @@ describe('Pets', ()  => {
         });
   });
 
+  // TEST INDEX - JSON API
+  it('should list ALL pets on / GET with JSON response', (done) => {
+    chai.request(server)
+        .get('/')
+        .set('content-type', 'application/json')
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body.should.be.a('object');
+          res.body.should.have.property('pets');
+          res.body.should.have.property('pagesCount');
+          res.body.should.have.property('currentPage');
+          res.body.pets.should.be.a('array');
+          done();
+        });
+  });
+
   // TEST NEW
   it('should display new form on /pets/new GET', (done) => {
     chai.request(server)

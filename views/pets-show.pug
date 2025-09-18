@@ -13,12 +13,13 @@ block content
       p Born on #{pet.birthday}
       p=pet.description
       
-      form(action='your-server-side-code', method='POST')
+      form(action='/pets/' + pet.id + '/purchase', method='POST')
+        input(type='hidden', name='petId', value=pet.id)
         script.stripe-button(src='https://checkout.stripe.com/checkout.js',
         data-key=PUBLIC_STRIPE_API_KEY,
-        data-amount='999',
-        data-name='Stripe.com',
-        data-description='Widget',
+        data-amount=pet.price * 100,
+        data-name='Pete\'s Pet Emporium',
+        data-description=pet.name + ' - ' + pet.species,
         data-image='https://stripe.com/img/documentation/checkout/marketplace.png',
         data-locale='auto',
         data-zip-code='true')

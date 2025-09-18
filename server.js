@@ -38,7 +38,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 // Make Stripe public key available to templates
-app.locals.PUBLIC_STRIPE_API_KEY = process.env.PUBLIC_STRIPE_API_KEY || 'pk_test_51S8O9m0VpeucLSehc9IkKnVOTjth2cJgkClWuAyonVVRw1y1qxMGdM6qansl73hTzaEr6qo4Kv2w6pPXciT5xBY000AimQAoHQ';
+app.locals.PUBLIC_STRIPE_API_KEY = process.env.PUBLIC_STRIPE_API_KEY || 'pk_test_TYooMQauvdEDq54NiTphI7jx';
 
 require('./routes/index.js')(app);
 require('./routes/pets.js')(app);

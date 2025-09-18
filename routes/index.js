@@ -11,15 +11,26 @@ app.get('/', (req, res) => {
   });
 });
 
-// SEARCH PET
+// SEARCH PET - Full-text search with MongoDB $text
 app.get('/search', (req, res) => {
-  const term = new RegExp(req.query.term, 'i');
+  Pet
+    .find(
+      { $text: { $search: req.query.term } },
+      { score: { $meta: "textScore" } }
+    )
+    .sort({ score: { $meta: 'textScore' } })
+    .limit(20)
+    .exec((err, pets) => {
+      if (err) { 
+        console.log('Search error:', err);
+        return res.status(400).send(err);
+      }
 
-  Pet.find({$or:[
-    {'name': term},
-    {'species': term}
-  ]}).exec((err, pets) => {
-    res.render('pets-index', { pets: pets });    
-  });
+      if (req.header('Content-Type') == 'application/json') {
+        return res.json({ pets: pets });
+      } else {
+        return res.render('pets-index', { pets: pets, term: req.query.term });
+      }
+    });
 });
 }
